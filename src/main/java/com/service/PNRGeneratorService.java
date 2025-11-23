@@ -1,4 +1,8 @@
-package main.java.com.service;
+package com.service;
 
-public class PNRGeneratorService {
+import reactor.core.publisher.Mono;
+
+public interface PNRGeneratorService {
+    Mono<String> generateUniquePNR();
+    boolean validatePNR(String pnr);
 }
