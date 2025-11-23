@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: flight-booking-webflux
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/flightBookingDB
+      auto-index-creation: true
+
+  codec:
+    max-in-memory-size: 10MB
+
+server:
+  port: 8081
+
+# API Documentation
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+
+# Logging
+logging:
+  level:
+    root: INFO
+    com.flightapp: DEBUG
+    org.springframework.data.mongodb: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+# Application specific settings
+app:
+  booking:
+    cancellation-hours: 24
+    pnr-length: 9
+    seat-hold-duration: 600
+  timezone: Asia/Kolkata

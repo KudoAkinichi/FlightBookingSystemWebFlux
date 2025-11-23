@@ -1,0 +1,11 @@
+spring:
+  data:
+    mongodb:
+      uri: ${MONGODB_URI:mongodb://localhost:27017/flightBookingDB_prod}
+
+logging:
+  level:
+    root: WARN
+    com.flightapp: INFO
+  file:
+    name: /var/log/flight-booking/application.log
