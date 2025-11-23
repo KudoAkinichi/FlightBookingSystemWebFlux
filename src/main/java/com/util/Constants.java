@@ -1,4 +1,4 @@
-package main.java.com.util;
+package com.util;
 
 public final class Constants {
 
