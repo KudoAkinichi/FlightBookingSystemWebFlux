@@ -1,63 +1,606 @@
 {
   "info": {
-    "name": "Flight Booking System API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    "name": "Flight Booking System - Complete API Collection",
+    "description": "Comprehensive API collection for Flight Booking System built with Spring WebFlux and MongoDB",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
   },
   "item": [
     {
-      "name": "1. Create Airline - IndiGo",
-      "request": {
-        "method": "POST",
-        "header": [{"key": "Content-Type", "value": "application/json"}],
-        "url": "http://localhost:8081/api/v1/admin/airlines",
-        "body": {
-          "mode": "raw",
-          "raw": "{\"airlineCode\":\"6E\",\"name\":\"IndiGo\",\"logoUrl\":\"https://example.com/logos/indigo.png\",\"contactEmail\":\"support@goindigo.in\",\"contactPhone\":\"+91-9910383838\",\"website\":\"https://www.goindigo.in\"}"
+      "name": "Admin Operations",
+      "item": [
+        {
+          "name": "1. Create Airline - IndiGo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8081/api/v1/admin/airlines",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "v1", "admin", "airlines"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"airlineCode\": \"6E\",\n  \"name\": \"IndiGo\",\n  \"logoUrl\": \"https://example.com/logos/indigo.png\",\n  \"contactEmail\": \"support@goindigo.in\",\n  \"contactPhone\": \"+91-9910383838\",\n  \"website\": \"https://www.goindigo.in\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. Create Airline - Air India",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8081/api/v1/admin/airlines",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "v1", "admin", "airlines"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"airlineCode\": \"AI\",\n  \"name\": \"Air India\",\n  \"logoUrl\": \"https://example.com/logos/airindia.png\",\n  \"contactEmail\": \"support@airindia.in\",\n  \"contactPhone\": \"+91-1234567890\",\n  \"website\": \"https://www.airindia.in\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "3. Create Airline - SpiceJet",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8081/api/v1/admin/airlines",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "v1", "admin", "airlines"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"airlineCode\": \"SG\",\n  \"name\": \"SpiceJet\",\n  \"logoUrl\": \"https://example.com/logos/spicejet.png\",\n  \"contactEmail\": \"support@spicejet.com\",\n  \"contactPhone\": \"+91-9871803333\",\n  \"website\": \"https://www.spicejet.com\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "4. Get All Airlines",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8081/api/v1/admin/airlines",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "v1", "admin", "airlines"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "5. Get Airline by Code",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8081/api/v1/admin/airlines/6E",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "v1", "admin", "airlines", "6E"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "6. Update Airline",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8081/api/v1/admin/airlines/6E",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "v1", "admin", "airlines", "6E"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"airlineCode\": \"6E\",\n  \"name\": \"IndiGo Airlines\",\n  \"logoUrl\": \"https://example.com/logos/indigo-updated.png\",\n  \"contactEmail\": \"support@goindigo.in\",\n  \"contactPhone\": \"+91-9910383838\",\n  \"website\": \"https://www.goindigo.in\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "7. Create Airport - Delhi",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8081/api/v1/admin/airports",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "v1", "admin", "airports"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"iataCode\": \"DEL\",\n  \"name\": \"Indira Gandhi International Airport\",\n  \"city\": \"New Delhi\",\n  \"country\": \"India\",\n  \"timezone\": \"Asia/Kolkata\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "8. Create Airport - Mumbai",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8081/api/v1/admin/airports",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "v1", "admin", "airports"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"iataCode\": \"BOM\",\n  \"name\": \"Chhatrapati Shivaji Maharaj International Airport\",\n  \"city\": \"Mumbai\",\n  \"country\": \"India\",\n  \"timezone\": \"Asia/Kolkata\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "9. Create Airport - Bangalore",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8081/api/v1/admin/airports",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "v1", "admin", "airports"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"iataCode\": \"BLR\",\n  \"name\": \"Kempegowda International Airport\",\n  \"city\": \"Bangalore\",\n  \"country\": \"India\",\n  \"timezone\": \"Asia/Kolkata\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "10. Create Airport - Chennai",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8081/api/v1/admin/airports",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "v1", "admin", "airports"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"iataCode\": \"MAA\",\n  \"name\": \"Chennai International Airport\",\n  \"city\": \"Chennai\",\n  \"country\": \"India\",\n  \"timezone\": \"Asia/Kolkata\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "11. Get All Airports",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8081/api/v1/admin/airports",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "v1", "admin", "airports"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "12. Get Airport by Code",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8081/api/v1/admin/airports/DEL",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "v1", "admin", "airports", "DEL"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "13. Add Flight Inventory - DEL to BOM",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8081/api/v1/admin/inventory",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "v1", "admin", "inventory"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"airlineCode\": \"6E\",\n  \"flightNumber\": \"6E2045\",\n  \"origin\": \"DEL\",\n  \"destination\": \"BOM\",\n  \"departureDateTime\": \"2025-11-25T08:00:00\",\n  \"arrivalDateTime\": \"2025-11-25T10:30:00\",\n  \"aircraftType\": \"Airbus A320\",\n  \"totalSeats\": 180,\n  \"baseFare\": 4500.00,\n  \"currency\": \"INR\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "14. Add Flight Inventory - DEL to BLR",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8081/api/v1/admin/inventory",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "v1", "admin", "inventory"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"airlineCode\": \"AI\",\n  \"flightNumber\": \"AI503\",\n  \"origin\": \"DEL\",\n  \"destination\": \"BLR\",\n  \"departureDateTime\": \"2025-11-25T14:00:00\",\n  \"arrivalDateTime\": \"2025-11-25T16:45:00\",\n  \"aircraftType\": \"Boeing 737\",\n  \"totalSeats\": 150,\n  \"baseFare\": 5200.00,\n  \"currency\": \"INR\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "15. Add Flight Inventory - BOM to DEL",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8081/api/v1/admin/inventory",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "v1", "admin", "inventory"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"airlineCode\": \"6E\",\n  \"flightNumber\": \"6E6789\",\n  \"origin\": \"BOM\",\n  \"destination\": \"DEL\",\n  \"departureDateTime\": \"2025-11-25T18:00:00\",\n  \"arrivalDateTime\": \"2025-11-25T20:30:00\",\n  \"aircraftType\": \"Airbus A321\",\n  \"totalSeats\": 200,\n  \"baseFare\": 4800.00,\n  \"currency\": \"INR\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "16. Update Flight Inventory",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8081/api/v1/admin/inventory/{{flightId}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "v1", "admin", "inventory", "{{flightId}}"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"airlineCode\": \"6E\",\n  \"flightNumber\": \"6E2045\",\n  \"origin\": \"DEL\",\n  \"destination\": \"BOM\",\n  \"departureDateTime\": \"2025-11-25T08:30:00\",\n  \"arrivalDateTime\": \"2025-11-25T11:00:00\",\n  \"aircraftType\": \"Airbus A320\",\n  \"totalSeats\": 180,\n  \"baseFare\": 4700.00,\n  \"currency\": \"INR\"\n}"
+            }
+          },
+          "response": []
         }
-      }
+      ]
     },
     {
-      "name": "2. Create Airport - Delhi",
-      "request": {
-        "method": "POST",
-        "header": [{"key": "Content-Type", "value": "application/json"}],
-        "url": "http://localhost:8081/api/v1/admin/airports",
-        "body": {
-          "mode": "raw",
-          "raw": "{\"iataCode\":\"DEL\",\"name\":\"Indira Gandhi International Airport\",\"city\":\"New Delhi\",\"country\":\"India\",\"timezone\":\"Asia/Kolkata\"}"
+      "name": "Flight Operations",
+      "item": [
+        {
+          "name": "1. Search Flights - DEL to BOM",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8081/api/v1/flights/search",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "v1", "flights", "search"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"origin\": \"DEL\",\n  \"destination\": \"BOM\",\n  \"departureDate\": \"2025-11-25\",\n  \"passengers\": 2,\n  \"tripType\": \"ONEWAY\",\n  \"cabinClass\": \"ECONOMY\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. Search Flights - DEL to BLR",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8081/api/v1/flights/search",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "v1", "flights", "search"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"origin\": \"DEL\",\n  \"destination\": \"BLR\",\n  \"departureDate\": \"2025-11-25\",\n  \"passengers\": 1,\n  \"tripType\": \"ONEWAY\",\n  \"cabinClass\": \"BUSINESS\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "3. Get Flight by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8081/api/v1/flights/{{flightId}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "v1", "flights", "{{flightId}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "4. Get Seat Map",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8081/api/v1/flights/{{flightId}}/seats",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "v1", "flights", "{{flightId}}", "seats"]
+            }
+          },
+          "response": []
         }
-      }
+      ]
     },
     {
-      "name": "3. Add Flight Inventory",
-      "request": {
-        "method": "POST",
-        "header": [{"key": "Content-Type", "value": "application/json"}],
-        "url": "http://localhost:8081/api/v1/admin/inventory",
-        "body": {
-          "mode": "raw",
-          "raw": "{\"airlineCode\":\"6E\",\"flightNumber\":\"6E2045\",\"origin\":\"DEL\",\"destination\":\"BOM\",\"departureDateTime\":\"2025-11-25T08:00:00\",\"arrivalDateTime\":\"2025-11-25T10:30:00\",\"aircraftType\":\"Airbus A320\",\"totalSeats\":180,\"baseFare\":4500.00,\"currency\":\"INR\"}"
+      "name": "Booking Operations",
+      "item": [
+        {
+          "name": "1. Create Booking - Single Passenger",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8081/api/v1/bookings",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "v1", "bookings"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"flightId\": \"{{flightId}}\",\n  \"contactName\": \"Rohit Sharma\",\n  \"contactEmail\": \"rohit.sharma@example.com\",\n  \"passengers\": [\n    {\n      \"name\": \"Rohit Sharma\",\n      \"gender\": \"MALE\",\n      \"age\": 35,\n      \"seatNumber\": \"4A\",\n      \"mealPreference\": \"NON_VEG\"\n    }\n  ],\n  \"seatNumbers\": [\"4A\"]\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. Create Booking - Multiple Passengers",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8081/api/v1/bookings",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "v1", "bookings"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"flightId\": \"{{flightId}}\",\n  \"contactName\": \"Virat Kohli\",\n  \"contactEmail\": \"virat.kohli@example.com\",\n  \"passengers\": [\n    {\n      \"name\": \"Virat Kohli\",\n      \"gender\": \"MALE\",\n      \"age\": 35,\n      \"seatNumber\": \"5A\",\n      \"mealPreference\": \"NON_VEG\"\n    },\n    {\n      \"name\": \"Anushka Sharma\",\n      \"gender\": \"FEMALE\",\n      \"age\": 35,\n      \"seatNumber\": \"5B\",\n      \"mealPreference\": \"VEG\"\n    },\n    {\n      \"name\": \"Vamika Kohli\",\n      \"gender\": \"FEMALE\",\n      \"age\": 3,\n      \"seatNumber\": \"5C\",\n      \"mealPreference\": \"VEG\"\n    }\n  ],\n  \"seatNumbers\": [\"5A\", \"5B\", \"5C\"]\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "3. Get Booking by PNR",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8081/api/v1/bookings/pnr/{{pnr}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "v1", "bookings", "pnr", "{{pnr}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "4. Get Booking History by Email",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8081/api/v1/bookings/user/rohit.sharma@example.com",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "v1", "bookings", "user", "rohit.sharma@example.com"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "5. Download Ticket PDF",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8081/api/v1/bookings/{{pnr}}/download",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "v1", "bookings", "{{pnr}}", "download"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "6. Resend Booking Email",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8081/api/v1/bookings/{{pnr}}/resend-email",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "v1", "bookings", "{{pnr}}", "resend-email"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "7. Cancel Booking",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8081/api/v1/bookings/{{pnr}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "v1", "bookings", "{{pnr}}"]
+            }
+          },
+          "response": []
         }
-      }
+      ]
     },
     {
-      "name": "4. Search Flights",
-      "request": {
-        "method": "POST",
-        "header": [{"key": "Content-Type", "value": "application/json"}],
-        "url": "http://localhost:8081/api/v1/flights/search",
-        "body": {
-          "mode": "raw",
-          "raw": "{\"origin\":\"DEL\",\"destination\":\"BOM\",\"departureDate\":\"2025-11-25\",\"passengers\":2,\"tripType\":\"ONEWAY\",\"cabinClass\":\"ECONOMY\"}"
+      "name": "Health Check",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8081/api/v1/health",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "v1", "health"]
+            }
+          },
+          "response": []
         }
-      }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "flightId",
+      "value": "REPLACE_WITH_ACTUAL_FLIGHT_ID",
+      "type": "string"
     },
     {
-      "name": "5. Health Check",
-      "request": {
-        "method": "GET",
-        "url": "http://localhost:8081/api/v1/health"
-      }
+      "key": "pnr",
+      "value": "REPLACE_WITH_ACTUAL_PNR",
+      "type": "string"
     }
   ]
 }
