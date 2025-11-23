@@ -5,6 +5,8 @@ import com.dto.response.ApiResponse;
 import com.dto.response.FlightSearchResponse;
 import com.service.FlightService;
 import com.util.Constants;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,15 +21,13 @@ import java.util.List;
 @RequestMapping(Constants.FLIGHTS_PATH)
 @RequiredArgsConstructor
 @Slf4j
+@Tag(name = "Flight Operations", description = "APIs for searching flights and seat management")
 public class FlightController {
 
     private final FlightService flightService;
 
-    /**
-     * Search for flights
-     * POST /api/v1/flights/search
-     */
     @PostMapping("/search")
+    @Operation(summary = "Search flights", description = "Search for available flights based on origin, destination, and date")
     public Mono<ResponseEntity<ApiResponse<List<FlightSearchResponse>>>> searchFlights(
             @Valid @RequestBody FlightSearchRequest request) {
 
@@ -51,11 +51,8 @@ public class FlightController {
                 });
     }
 
-    /**
-     * Get flight by ID
-     * GET /api/v1/flights/{flightId}
-     */
     @GetMapping("/{flightId}")
+    @Operation(summary = "Get flight details", description = "Retrieve detailed information about a specific flight")
     public Mono<ResponseEntity<ApiResponse<Object>>> getFlightById(@PathVariable String flightId) {
         log.info("Fetching flight details for ID: {}", flightId);
 
@@ -65,11 +62,8 @@ public class FlightController {
                 ));
     }
 
-    /**
-     * Get seat map for a flight
-     * GET /api/v1/flights/{flightId}/seats
-     */
     @GetMapping("/{flightId}/seats")
+    @Operation(summary = "Get seat map", description = "Retrieve the seat map for a specific flight")
     public Mono<ResponseEntity<ApiResponse<Object>>> getSeatMap(@PathVariable String flightId) {
         log.info("Fetching seat map for flight: {}", flightId);
 

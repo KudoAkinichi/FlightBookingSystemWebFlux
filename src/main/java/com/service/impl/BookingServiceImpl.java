@@ -153,10 +153,14 @@ public class BookingServiceImpl implements BookingService {
      * Generate unique PNR
      */
     private String generateUniquePNR() {
-        String pnr;
-        do {
+        String pnr = PNRGenerator.generatePNR();
+
+        // Simple check - if exists, try again (blocking for simplicity)
+        int attempts = 0;
+        while (Boolean.TRUE.equals(bookingRepository.existsByPnr(pnr).block()) && attempts < 10) {
             pnr = PNRGenerator.generatePNR();
-        } while (Boolean.TRUE.equals(bookingRepository.existsByPnr(pnr).block()));
+            attempts++;
+        }
 
         return pnr;
     }

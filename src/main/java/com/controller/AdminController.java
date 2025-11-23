@@ -14,6 +14,8 @@ import com.repository.AirportRepository;
 import com.service.InventoryService;
 import com.util.Constants;
 import com.util.DateTimeUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,17 +30,15 @@ import java.util.List;
 @RequestMapping(Constants.ADMIN_PATH)
 @RequiredArgsConstructor
 @Slf4j
+@Tag(name = "Admin Operations", description = "APIs for administrative tasks like managing inventory, airlines, and airports")
 public class AdminController {
 
     private final InventoryService inventoryService;
     private final AirlineRepository airlineRepository;
     private final AirportRepository airportRepository;
 
-    /**
-     * Add flight inventory/schedule
-     * POST /api/v1/admin/inventory
-     */
     @PostMapping("/inventory")
+    @Operation(summary = "Add flight inventory", description = "Add a new flight schedule to the system")
     public Mono<ResponseEntity<ApiResponse<String>>> addFlightInventory(
             @Valid @RequestBody InventoryRequest request) {
 
@@ -50,11 +50,8 @@ public class AdminController {
                         .body(response));
     }
 
-    /**
-     * Update flight inventory
-     * PUT /api/v1/admin/inventory/{inventoryId}
-     */
     @PutMapping("/inventory/{inventoryId}")
+    @Operation(summary = "Update flight inventory", description = "Update an existing flight schedule")
     public Mono<ResponseEntity<ApiResponse<String>>> updateFlightInventory(
             @PathVariable String inventoryId,
             @Valid @RequestBody InventoryRequest request) {
@@ -65,11 +62,8 @@ public class AdminController {
                 .map(ResponseEntity::ok);
     }
 
-    /**
-     * Create or update airline
-     * POST /api/v1/admin/airlines
-     */
     @PostMapping("/airlines")
+    @Operation(summary = "Create airline", description = "Register a new airline in the system")
     public Mono<ResponseEntity<ApiResponse<Airline>>> createAirline(
             @Valid @RequestBody AirlineRequest request) {
 
@@ -102,11 +96,8 @@ public class AdminController {
                 });
     }
 
-    /**
-     * Update airline
-     * PUT /api/v1/admin/airlines/{airlineCode}
-     */
     @PutMapping("/airlines/{airlineCode}")
+    @Operation(summary = "Update airline", description = "Update airline information")
     public Mono<ResponseEntity<ApiResponse<Airline>>> updateAirline(
             @PathVariable String airlineCode,
             @Valid @RequestBody AirlineRequest request) {
@@ -130,11 +121,8 @@ public class AdminController {
                 });
     }
 
-    /**
-     * Get all airlines
-     * GET /api/v1/admin/airlines
-     */
     @GetMapping("/airlines")
+    @Operation(summary = "Get all airlines", description = "Retrieve list of all registered airlines")
     public Mono<ResponseEntity<ApiResponse<List<Airline>>>> getAllAirlines() {
         log.info("Admin: Fetching all airlines");
 
@@ -145,11 +133,8 @@ public class AdminController {
                 ));
     }
 
-    /**
-     * Get airline by code
-     * GET /api/v1/admin/airlines/{airlineCode}
-     */
     @GetMapping("/airlines/{airlineCode}")
+    @Operation(summary = "Get airline by code", description = "Retrieve specific airline details")
     public Mono<ResponseEntity<ApiResponse<Airline>>> getAirlineByCode(
             @PathVariable String airlineCode) {
 
@@ -162,11 +147,8 @@ public class AdminController {
                 .switchIfEmpty(Mono.error(new AirlineNotFoundException(airlineCode)));
     }
 
-    /**
-     * Create airport
-     * POST /api/v1/admin/airports
-     */
     @PostMapping("/airports")
+    @Operation(summary = "Create airport", description = "Register a new airport in the system")
     public Mono<ResponseEntity<ApiResponse<Airport>>> createAirport(
             @Valid @RequestBody AirportRequest request) {
 
@@ -199,11 +181,8 @@ public class AdminController {
                 });
     }
 
-    /**
-     * Update airport
-     * PUT /api/v1/admin/airports/{iataCode}
-     */
     @PutMapping("/airports/{iataCode}")
+    @Operation(summary = "Update airport", description = "Update airport information")
     public Mono<ResponseEntity<ApiResponse<Airport>>> updateAirport(
             @PathVariable String iataCode,
             @Valid @RequestBody AirportRequest request) {
@@ -226,11 +205,8 @@ public class AdminController {
                 });
     }
 
-    /**
-     * Get all airports
-     * GET /api/v1/admin/airports
-     */
     @GetMapping("/airports")
+    @Operation(summary = "Get all airports", description = "Retrieve list of all registered airports")
     public Mono<ResponseEntity<ApiResponse<List<Airport>>>> getAllAirports() {
         log.info("Admin: Fetching all airports");
 
@@ -241,11 +217,8 @@ public class AdminController {
                 ));
     }
 
-    /**
-     * Get airport by IATA code
-     * GET /api/v1/admin/airports/{iataCode}
-     */
     @GetMapping("/airports/{iataCode}")
+    @Operation(summary = "Get airport by code", description = "Retrieve specific airport details")
     public Mono<ResponseEntity<ApiResponse<Airport>>> getAirportByCode(
             @PathVariable String iataCode) {
 

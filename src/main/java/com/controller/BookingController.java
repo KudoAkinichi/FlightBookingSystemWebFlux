@@ -8,6 +8,8 @@ import com.dto.response.TicketResponse;
 import com.service.BookingService;
 import com.service.TicketService;
 import com.util.Constants;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,16 +24,14 @@ import java.util.List;
 @RequestMapping(Constants.BOOKINGS_PATH)
 @RequiredArgsConstructor
 @Slf4j
+@Tag(name = "Booking Operations", description = "APIs for flight booking management")
 public class BookingController {
 
     private final BookingService bookingService;
     private final TicketService ticketService;
 
-    /**
-     * Create a new booking
-     * POST /api/v1/bookings
-     */
     @PostMapping
+    @Operation(summary = "Create booking", description = "Create a new flight booking")
     public Mono<ResponseEntity<ApiResponse<BookingResponse>>> createBooking(
             @Valid @RequestBody BookingRequest request) {
 
@@ -43,11 +43,8 @@ public class BookingController {
                         .body(ApiResponse.success("Booking created successfully", booking)));
     }
 
-    /**
-     * Get booking by PNR
-     * GET /api/v1/bookings/pnr/{pnr}
-     */
     @GetMapping("/pnr/{pnr}")
+    @Operation(summary = "Get booking by PNR", description = "Retrieve booking details using PNR number")
     public Mono<ResponseEntity<ApiResponse<TicketResponse>>> getBookingByPnr(
             @PathVariable String pnr) {
 
@@ -59,11 +56,8 @@ public class BookingController {
                 ));
     }
 
-    /**
-     * Get booking history by email
-     * GET /api/v1/bookings/user/{email}
-     */
     @GetMapping("/user/{email}")
+    @Operation(summary = "Get booking history", description = "Retrieve all bookings for a user by email")
     public Mono<ResponseEntity<ApiResponse<List<BookingResponse>>>> getBookingHistory(
             @PathVariable String email) {
 
@@ -87,11 +81,8 @@ public class BookingController {
                 });
     }
 
-    /**
-     * Cancel booking
-     * DELETE /api/v1/bookings/{pnr}
-     */
     @DeleteMapping("/{pnr}")
+    @Operation(summary = "Cancel booking", description = "Cancel a booking using PNR number")
     public Mono<ResponseEntity<ApiResponse<CancellationResponse>>> cancelBooking(
             @PathVariable String pnr) {
 
@@ -103,11 +94,8 @@ public class BookingController {
                 ));
     }
 
-    /**
-     * Download ticket PDF
-     * GET /api/v1/bookings/{pnr}/download
-     */
     @GetMapping("/{pnr}/download")
+    @Operation(summary = "Download ticket", description = "Download ticket PDF for a booking")
     public Mono<ResponseEntity<byte[]>> downloadTicket(@PathVariable String pnr) {
         log.info("Downloading ticket for PNR: {}", pnr);
 
@@ -119,11 +107,8 @@ public class BookingController {
                         .body(pdfBytes));
     }
 
-    /**
-     * Resend booking confirmation email
-     * POST /api/v1/bookings/{pnr}/resend-email
-     */
     @PostMapping("/{pnr}/resend-email")
+    @Operation(summary = "Resend booking email", description = "Resend booking confirmation email")
     public Mono<ResponseEntity<ApiResponse<String>>> resendEmail(@PathVariable String pnr) {
         log.info("Resending email for PNR: {}", pnr);
 
