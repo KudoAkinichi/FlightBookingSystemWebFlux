@@ -12,6 +12,7 @@ import com.repository.FlightRepository;
 import com.service.BookingService;
 import com.util.Constants;
 import com.util.DateTimeUtil;
+import com.util.FlightBookingMapper;
 import com.util.PNRGenerator;
 import com.validator.BookingValidator;
 import com.validator.CancellationValidator;
@@ -22,7 +23,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -52,7 +52,7 @@ public class BookingServiceImpl implements BookingService {
                     // Save flight and booking
                     return flightRepository.save(flight)
                             .then(bookingRepository.save(booking))
-                            .map(savedBooking -> convertToBookingResponse(savedBooking, flight));
+                            .map(this::convertToBookingResponse);
                 })
                 .doOnSuccess(response -> log.info("Booking created successfully with PNR: {}", response.getPnr()))
                 .doOnError(error -> log.error("Error creating booking: {}", error.getMessage()));
@@ -77,7 +77,7 @@ public class BookingServiceImpl implements BookingService {
         return bookingRepository.findByContactEmailOrderByBookingDateTimeDesc(email.toLowerCase())
                 .flatMap(booking ->
                         flightRepository.findById(booking.getFlightId())
-                                .map(flight -> convertToBookingResponse(booking, flight))
+                                .map(flight -> convertToBookingResponse(booking))
                 )
                 .switchIfEmpty(Flux.empty());
     }
@@ -128,7 +128,8 @@ public class BookingServiceImpl implements BookingService {
                         .seatNumber(passengerDto.getSeatNumber())
                         .mealPreference(passengerDto.getMealPreference())
                         .build())
-                .collect(Collectors.toList());
+                .toList();   // SonarQube compliant
+
 
         double totalFare = calculateTotalFare(flight, request.getSeatNumbers());
 
@@ -210,7 +211,7 @@ public class BookingServiceImpl implements BookingService {
     /**
      * Convert to BookingResponse
      */
-    private BookingResponse convertToBookingResponse(Booking booking, Flight flight) {
+    private BookingResponse convertToBookingResponse(Booking booking) {
         List<PassengerInfo> passengerInfos = booking.getPassengers().stream()
                 .map(p -> PassengerInfo.builder()
                         .name(p.getName())
@@ -219,7 +220,7 @@ public class BookingServiceImpl implements BookingService {
                         .seatNumber(p.getSeatNumber())
                         .mealPreference(p.getMealPreference())
                         .build())
-                .collect(Collectors.toList());
+                .toList();
 
         return BookingResponse.builder()
                 .bookingId(booking.getId())
@@ -243,27 +244,9 @@ public class BookingServiceImpl implements BookingService {
      * Convert to TicketResponse
      */
     private TicketResponse convertToTicketResponse(Booking booking, Flight flight) {
-        FlightDetails flightDetails = FlightDetails.builder()
-                .flightNumber(flight.getFlightNumber())
-                .airlineName(flight.getAirlineName())
-                .airlineLogoUrl(flight.getAirlineLogoUrl())
-                .origin(flight.getOrigin())
-                .destination(flight.getDestination())
-                .departureDateTime(flight.getDepartureDateTime())
-                .arrivalDateTime(flight.getArrivalDateTime())
-                .duration(DateTimeUtil.calculateDuration(
-                        flight.getDepartureDateTime(),
-                        flight.getArrivalDateTime()))
-                .aircraftType(flight.getAircraftType())
-                .build();
+        FlightDetails flightDetails = FlightBookingMapper.mapFlightDetails(flight);
+        BookingDetails bookingDetails = FlightBookingMapper.mapBookingDetails(booking);
 
-        BookingDetails bookingDetails = BookingDetails.builder()
-                .contactName(booking.getContactName())
-                .contactEmail(booking.getContactEmail())
-                .seatNumbers(booking.getSeatNumbers())
-                .bookingDateTime(booking.getBookingDateTime())
-                .journeyDate(booking.getJourneyDate())
-                .build();
 
         List<PassengerInfo> passengers = booking.getPassengers().stream()
                 .map(p -> PassengerInfo.builder()
@@ -273,7 +256,7 @@ public class BookingServiceImpl implements BookingService {
                         .seatNumber(p.getSeatNumber())
                         .mealPreference(p.getMealPreference())
                         .build())
-                .collect(Collectors.toList());
+                .toList();
 
         FareBreakdown fareBreakdown = FareBreakdown.builder()
                 .baseFare(flight.getBaseFare() * booking.getPassengers().size())
