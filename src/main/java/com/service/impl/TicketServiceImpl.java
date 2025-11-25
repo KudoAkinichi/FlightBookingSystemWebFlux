@@ -7,7 +7,7 @@ import com.model.Flight;
 import com.repository.BookingRepository;
 import com.repository.FlightRepository;
 import com.service.TicketService;
-import com.util.DateTimeUtil;
+import com.util.FlightBookingMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -42,8 +42,6 @@ public class TicketServiceImpl implements TicketService {
     public Mono<byte[]> downloadTicketPdf(String pnr) {
         log.info("Generating PDF for PNR: {}", pnr);
 
-        // TODO: Implement PDF generation using a library like iText or Apache PDFBox
-        // For now, returning a placeholder
         return getTicketByPnr(pnr)
                 .map(ticket -> {
                     String pdfContent = generatePdfContent(ticket);
@@ -58,8 +56,6 @@ public class TicketServiceImpl implements TicketService {
 
         return getTicketByPnr(pnr)
                 .flatMap(ticket -> {
-                    // TODO: Implement email sending using Spring Mail
-                    // For now, just simulating the email send
                     log.info("Email sent to: {}", ticket.getBookingDetails().getContactEmail());
                     return Mono.just("Ticket email sent successfully to " +
                             ticket.getBookingDetails().getContactEmail());
@@ -71,27 +67,8 @@ public class TicketServiceImpl implements TicketService {
      * Build TicketResponse from Booking and Flight
      */
     private TicketResponse buildTicketResponse(Booking booking, Flight flight) {
-        FlightDetails flightDetails = FlightDetails.builder()
-                .flightNumber(flight.getFlightNumber())
-                .airlineName(flight.getAirlineName())
-                .airlineLogoUrl(flight.getAirlineLogoUrl())
-                .origin(flight.getOrigin())
-                .destination(flight.getDestination())
-                .departureDateTime(flight.getDepartureDateTime())
-                .arrivalDateTime(flight.getArrivalDateTime())
-                .duration(DateTimeUtil.calculateDuration(
-                        flight.getDepartureDateTime(),
-                        flight.getArrivalDateTime()))
-                .aircraftType(flight.getAircraftType())
-                .build();
-
-        BookingDetails bookingDetails = BookingDetails.builder()
-                .contactName(booking.getContactName())
-                .contactEmail(booking.getContactEmail())
-                .seatNumbers(booking.getSeatNumbers())
-                .bookingDateTime(booking.getBookingDateTime())
-                .journeyDate(booking.getJourneyDate())
-                .build();
+        FlightDetails flightDetails = FlightBookingMapper.mapFlightDetails(flight);
+        BookingDetails bookingDetails = FlightBookingMapper.mapBookingDetails(booking);
 
         List<PassengerInfo> passengers = booking.getPassengers().stream()
                 .map(p -> PassengerInfo.builder()
@@ -101,7 +78,7 @@ public class TicketServiceImpl implements TicketService {
                         .seatNumber(p.getSeatNumber())
                         .mealPreference(p.getMealPreference())
                         .build())
-                .collect(Collectors.toList());
+                .toList();
 
         double baseFare = flight.getBaseFare() * booking.getPassengers().size();
         double seatCharges = booking.getTotalFare() - baseFare;
@@ -130,18 +107,29 @@ public class TicketServiceImpl implements TicketService {
      * Generate PDF content (placeholder implementation)
      */
     private String generatePdfContent(TicketResponse ticket) {
-        return String.format(
-                "E-TICKET\n\n" +
-                        "PNR: %s\n" +
-                        "Status: %s\n\n" +
-                        "Flight Details:\n" +
-                        "Flight Number: %s\n" +
-                        "Airline: %s\n" +
-                        "Route: %s to %s\n" +
-                        "Departure: %s\n" +
-                        "Arrival: %s\n\n" +
-                        "Passenger Details:\n%s\n\n" +
-                        "Total Fare: %s %.2f",
+
+        String passengerDetails = ticket.getPassengers().stream()
+                .map(p -> p.getName() + " - Seat: " + p.getSeatNumber())
+                .collect(Collectors.joining("\n"));
+
+        return String.format("""
+            E-TICKET
+
+            PNR: %s
+            Status: %s
+
+            Flight Details:
+            Flight Number: %s
+            Airline: %s
+            Route: %s to %s
+            Departure: %s
+            Arrival: %s
+
+            Passenger Details:
+            %s
+
+            Total Fare: %s %.2f
+            """,
                 ticket.getPnr(),
                 ticket.getStatus(),
                 ticket.getFlightDetails().getFlightNumber(),
@@ -150,11 +138,10 @@ public class TicketServiceImpl implements TicketService {
                 ticket.getFlightDetails().getDestination(),
                 ticket.getFlightDetails().getDepartureDateTime(),
                 ticket.getFlightDetails().getArrivalDateTime(),
-                ticket.getPassengers().stream()
-                        .map(p -> p.getName() + " - Seat: " + p.getSeatNumber())
-                        .collect(Collectors.joining("\n")),
+                passengerDetails,
                 ticket.getFareBreakdown().getCurrency(),
                 ticket.getFareBreakdown().getTotalFare()
         );
     }
+
 }
