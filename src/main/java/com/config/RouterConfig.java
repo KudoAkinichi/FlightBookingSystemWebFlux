@@ -9,12 +9,5 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class RouterConfig {
-    // Can add RouterFunction beans here for functional endpoints
-    // Example:
-    // @Bean
-    // public RouterFunction<ServerResponse> route(FlightHandler handler) {
-    //     return RouterFunctions
-    //         .route(GET("/api/v1/flights").and(accept(APPLICATION_JSON)), handler::list)
-    //         .andRoute(POST("/api/v1/flights").and(accept(APPLICATION_JSON)), handler::create);
-    // }
+
 }
