@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Component
 public class BookingValidator {
@@ -61,7 +60,7 @@ public class BookingValidator {
     private void validateSeatAvailability(List<String> requestedSeats, List<Seat> flightSeats) {
         List<String> unavailableSeats = requestedSeats.stream()
                 .filter(seatNumber -> !isSeatAvailable(seatNumber, flightSeats))
-                .collect(Collectors.toList());
+                .toList();
 
         if (!unavailableSeats.isEmpty()) {
             throw new InvalidRequestException(
