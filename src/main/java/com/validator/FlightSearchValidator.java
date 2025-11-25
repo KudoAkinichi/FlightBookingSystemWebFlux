@@ -14,7 +14,6 @@ public class FlightSearchValidator {
      * Validate flight search request
      */
     public void validateSearchRequest(FlightSearchRequest request) {
-        // Validate origin and destination are different
         if (request.getOrigin().equalsIgnoreCase(request.getDestination())) {
             throw new InvalidRequestException(
                     "Origin and destination cannot be the same"
@@ -51,24 +50,22 @@ public class FlightSearchValidator {
         }
 
         // Validate trip type
-        if (request.getTripType() != null) {
-            if (!Constants.TRIP_ONEWAY.equalsIgnoreCase(request.getTripType()) &&
+        if (request.getTripType() != null && !Constants.TRIP_ONEWAY.equalsIgnoreCase(request.getTripType()) &&
                     !Constants.TRIP_ROUNDTRIP.equalsIgnoreCase(request.getTripType())) {
                 throw new InvalidRequestException(
                         "Invalid trip type. Must be ONEWAY or ROUNDTRIP"
                 );
             }
-        }
+
 
         // Validate cabin class if provided
-        if (request.getCabinClass() != null) {
-            if (!Constants.SEAT_ECONOMY.equalsIgnoreCase(request.getCabinClass()) &&
+        if (request.getCabinClass() != null && !Constants.SEAT_ECONOMY.equalsIgnoreCase(request.getCabinClass()) &&
                     !Constants.SEAT_BUSINESS.equalsIgnoreCase(request.getCabinClass()) &&
                     !Constants.SEAT_FIRST_CLASS.equalsIgnoreCase(request.getCabinClass())) {
                 throw new InvalidRequestException(
                         "Invalid cabin class. Must be ECONOMY, BUSINESS, or FIRST_CLASS"
                 );
             }
-        }
+
     }
 }
